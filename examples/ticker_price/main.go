@@ -1,29 +1,33 @@
 package main
 
 import (
-	"encoding/json"
+	"flag"
 	"fmt"
-	"log"
+	"os"
 	"strings"
 
 	"github.com/metarsit/exchange"
 )
 
 func main() {
-	market := exchange.NewMarketAPI()
-	resp, err := market.TickerPrice()
+	var symbols string
+
+	flag.StringVar(&symbols, "symbols", "", "Name of a markets with comma delimited")
+	flag.Parse()
+
+	data, err := exchange.GetMarketAPI()
 	if err != nil {
-		log.Fatalf("Unable to retrieve Market Ticker: %s", err.Error())
+		os.Exit(1)
 	}
 
-	if resp.Code != "0" {
-		log.Fatalf("[%s] API Error %s", resp.Code, resp.Message)
-	}
-
-	var data exchange.TickerPrice
-	json.Unmarshal(*resp.Data, &data)
-
-	for ticker, price := range data {
-		fmt.Printf("%s: %v\n", strings.ToUpper(ticker), price)
+	if symbols == "" {
+		for ticker, price := range data {
+			fmt.Printf("%s: %v\n", strings.ToUpper(ticker), price)
+		}
+	} else {
+		var symbolList = strings.Split(symbols, ",")
+		for _, symbol := range symbolList {
+			fmt.Printf("%s: %v\n", strings.ToUpper(symbol), data[strings.ToLower(symbol)])
+		}
 	}
 }
