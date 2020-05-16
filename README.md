@@ -43,7 +43,7 @@ There are more information in `README.md` of each examples.
 
 To use this package, run:
 
-    go get github.com/metarsit/go-crypto-exchange
+    go get github.com/metarsit/exchange
 
 ## Bazel
 
