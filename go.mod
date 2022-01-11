@@ -1,4 +1,4 @@
-module github.com/rhigdon/go-crypto-exchange
+module github.com/metarsit/exchange
 go 1.14
 
 require (
