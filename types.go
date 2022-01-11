@@ -102,7 +102,7 @@ type Market struct{}
 
 // MarketResponse is Crypto Exchange Response of market struct
 type MarketResponse struct {
-	Code    string           `json:"code"`
+	Code    int64           `json:"code"`
 	Message string           `json:"msg"`
 	Data    *json.RawMessage `json:"data"`
 }
